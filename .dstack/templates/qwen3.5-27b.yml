@@ -1,0 +1,42 @@
+type: template
+name: qwen3.5-27b
+
+title: Qwen 3.5 27B
+description: Deploy Qwen 3.5 27B (FP8) as an OpenAI-compatible endpoint using SGLang.
+
+parameters:
+  - type: name
+  - type: resources
+
+  - type: env
+    title: Hugging Face token
+    name: HF_TOKEN
+
+configuration:
+  type: service
+
+  image: lmsysorg/sglang:latest
+
+  commands:
+    - |
+      python3 -m sglang.launch_server \
+      --model-path Qwen/Qwen3.5-27B-FP8 \
+      --host 0.0.0.0 \
+      --port 8000 \
+      --mem-fraction-static 0.8 \
+      --context-length 131072 \
+      --reasoning-parser qwen3 \
+      --tool-call-parser qwen3_coder
+  port: 8000
+  model: Qwen/Qwen3.5-27B-FP8
+
+  volumes:
+    - instance_path: /dstack-cache
+      path: /root/.cache
+      optional: true
+
+  spot_policy: auto
+
+  resources:
+    gpu: 80GB
+    disk: 200GB
