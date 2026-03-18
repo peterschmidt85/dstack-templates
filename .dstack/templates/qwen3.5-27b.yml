@@ -8,9 +8,10 @@ parameters:
   - type: name
   - type: resources
 
-  - type: env
-    title: Hugging Face token
-    name: HF_TOKEN
+  # Support optional parameters
+  # - type: env
+  #   title: Hugging Face token
+  #   name: HF_TOKEN
 
 configuration:
   type: service
